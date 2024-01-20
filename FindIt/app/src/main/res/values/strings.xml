@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">FindIt</string>
+    <string name="register_email_hint">Email</string>
+    <string name="register_password_hint">Password</string>
+    <string name="register_repeat_password_hint">Repeat password</string>
+    <string name="register_submit_hint">Sign Up</string>
+    <string name="register_submit_by_google_hint">Continue with Google</string>
+    <string name="login_hint">Already have an account? Login</string>
+    <string name="login_submit_hint">Log In</string>
+    <string name="lost_button_hint">Lost Items</string>
+    <string name="found_button_hint">Found Items</string>
+    <string name="new_item_button">Add new lost or found item</string>
+    <string name="add_item_main_string">Item Parameters</string>
+    <string name="item_lost">Lost</string>
+    <string name="item_found">Found</string>
+    <string name="what_hint">What?</string>
+    <string name="where_hint">Where?</string>
+    <string name="color_hint">Color?</string>
+    <string name="add_item_button">Add Item</string>
+    <string name="register_hint">Dont have an account?Register</string>
+    <string name="web_client_id">436236640478-nr25fu3gfi5jkluucpqte1lnrnp5lm18.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

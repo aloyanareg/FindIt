@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "436236640478",
+    "project_id": "findit-d592e",
+    "storage_bucket": "findit-d592e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436236640478:android:79d0c530303b69e251e24f",
+        "android_client_info": {
+          "package_name": "com.samsung.findit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC55pzoZOEOgzAqY0iifU4VOMu9bfvI5NQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
