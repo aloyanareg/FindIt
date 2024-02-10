@@ -59,17 +59,13 @@ public class LoginActivity extends AppCompatActivity {
                 String password = password_et.getText().toString();
 
                 mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(LoginActivity.this, LostFoundActivity.class);
-                                    LoginActivity.this.startActivity(intent);
-                                } else {
-                                    errors.setText("Email or Password are incorrect");
-                                }
+                        .addOnCompleteListener(LoginActivity.this, task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Intent intent = new Intent(LoginActivity.this, LostFoundActivity.class);
+                                LoginActivity.this.startActivity(intent);
+                            } else {
+                                errors.setText(task.getException().getMessage());
                             }
                         });
             }

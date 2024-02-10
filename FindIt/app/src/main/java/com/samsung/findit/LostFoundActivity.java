@@ -21,17 +21,19 @@ public class LostFoundActivity extends AppCompatActivity {
         lost_button = findViewById(R.id.lost_button);
         found_button = findViewById(R.id.found_button);
         new_item_button = findViewById(R.id.new_item_button);
-
+        lost_button.setBackgroundResource(R.drawable.lost_found_buttons_clicked);
+        found_button.setBackgroundResource(R.drawable.lost_found_buttons);
+        loadFragment(new LostFragment());
         lost_button.setOnClickListener(view -> {
             lost_button.setBackgroundResource(R.drawable.lost_found_buttons_clicked);
             found_button.setBackgroundResource(R.drawable.lost_found_buttons);
-           // loadFragment(new LostFragment());
+            loadFragment(new LostFragment());
         });
 
         found_button.setOnClickListener(view -> {
             lost_button.setBackgroundResource(R.drawable.lost_found_buttons);
             found_button.setBackgroundResource(R.drawable.lost_found_buttons_clicked);
-        //    loadFragment(new FoundFragment());
+            loadFragment(new FoundFragment());
         });
 
         new_item_button.setOnClickListener(view -> {

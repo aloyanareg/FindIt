@@ -19,12 +19,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="15sp"
             android:background="@drawable/lost_found_buttons_clicked"
             android:text="@string/lost_button_hint"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/found_button"
             android:layout_width="0dp"
+            android:textSize="15sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/lost_found_buttons"
@@ -36,15 +38,22 @@
         android:layout_height="wrap_content"
         android:text="@string/new_item_button"
         android:background="@drawable/new_item_button"
+        android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@+id/header_buttons" />
 
-    <LinearLayout
-        android:id="@+id/all_items"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_item_button">
+        app:layout_constraintTop_toBottomOf="@+id/new_item_button"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/all_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
