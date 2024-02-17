@@ -1,11 +1,15 @@
     package com.samsung.findit;
 
     import androidx.annotation.NonNull;
+    import androidx.appcompat.app.AlertDialog;
     import androidx.appcompat.app.AppCompatActivity;
 
     import android.annotation.SuppressLint;
+    import android.content.DialogInterface;
     import android.content.Intent;
     import android.os.Bundle;
+    import android.text.Editable;
+    import android.text.TextWatcher;
     import android.util.Log;
     import android.view.View;
     import android.widget.Button;
@@ -39,6 +43,24 @@
             repeat_password_et = findViewById(R.id.repeatPassword);
             errors = findViewById(R.id.errors);
             login_hint = findViewById(R.id.login_hint);
+            password_et.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (s.toString().isEmpty()) {
+                        password_et.setError("Password cannot be empty");
+                    } else {
+                        password_et.setError(null);
+                    }
+                }
+            });
             FirebaseAuth mAuth;
             mAuth = FirebaseAuth.getInstance();
             login_hint.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +102,10 @@
                                                         }
                                                     }
                                                 });
+                                                Intent intent = new Intent(RegisterActivity.this, LostFoundActivity.class);
+                                                RegisterActivity.this.startActivity(intent);
+
                                             }
-                                            Intent intent = new Intent(RegisterActivity.this, LostFoundActivity.class);
-                                            RegisterActivity.this.startActivity(intent);
                                         } else {
                                             Log.e("registration", "Registration failed.", task.getException());
                                         }

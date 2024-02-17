@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="@string/register_email_hint"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/password"
@@ -31,7 +32,8 @@
             android:layout_below="@id/email"
             android:layout_marginBottom="16dp"
             android:hint="@string/register_password_hint"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/errors"
@@ -47,16 +49,41 @@
             android:layout_below="@id/errors"
             android:layout_marginTop="16dp"
             android:background="@drawable/auth_submit"
-            android:text="@string/login_submit_hint" />
+            android:text="@string/login_submit_hint"
+            android:textColor="@color/black"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submit"
+            android:layout_marginTop="15dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:background="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@color/white"
+                android:text="or continue with"
+                android:textColor="@color/black"
+                />
+
+        </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submitGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/submit"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="44dp"
             android:background="@drawable/auth_submit_google"
-            android:text="@string/register_submit_by_google_hint" />
+            android:text="@string/register_submit_by_google_hint"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/register_hint"
             android:layout_width="wrap_content"

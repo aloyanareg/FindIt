@@ -4,7 +4,7 @@
     <string name="register_password_hint">Password</string>
     <string name="register_repeat_password_hint">Repeat password</string>
     <string name="register_submit_hint">Sign Up</string>
-    <string name="register_submit_by_google_hint">Continue with Google</string>
+    <string name="register_submit_by_google_hint">Google</string>
     <string name="login_hint">Already have an account? Login</string>
     <string name="login_submit_hint">Log In</string>
     <string name="lost_button_hint">Lost Items</string>
