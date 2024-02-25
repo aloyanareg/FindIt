@@ -18,13 +18,7 @@
             android:name=".LostFoundActivity"
             android:exported="false" />
         <activity
-            android:name=".FoundActivity"
-            android:exported="false" />
-        <activity
             android:name=".AddItemActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LostActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

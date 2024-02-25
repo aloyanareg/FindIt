@@ -37,6 +37,7 @@ public class AddItemActivity extends AppCompatActivity {
     EditText location_et;
     private FirebaseFirestore db;
     private CollectionReference itemsCollection;
+    private FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,9 @@ public class AddItemActivity extends AppCompatActivity {
         color_et = findViewById(R.id.item_color);
         location_et = findViewById(R.id.item_location);
         rg = findViewById(R.id.item_lost_or_found);
-        Intent intent1 = getIntent();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

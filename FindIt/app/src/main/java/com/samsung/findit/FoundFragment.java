@@ -2,18 +2,15 @@ package com.samsung.findit;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,25 +18,28 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
+import android.widget.ProgressBar;
 import java.util.Map;
 
 public class FoundFragment extends Fragment {
     private FirebaseFirestore db;
-    private CollectionReference itemsCollection;
-    LinearLayout items;
+    LinearLayout all_items;
+    CollectionReference itemsCollection;
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
         itemsCollection = db.collection("items");
-        items = getActivity().findViewById(R.id.all_items);
+        all_items = getActivity().findViewById(R.id.all_items);
+        progressBar = getActivity().findViewById(R.id.progressBar);
         startActivity();
         return inflater.inflate(R.layout.fragment_lost, container, false);
     }
 
     protected void startActivity() {
-        items.removeAllViews();
-        db.collection("items")
+        progressBar.setVisibility(View.VISIBLE);
+        all_items.removeAllViews();
+        itemsCollection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @SuppressLint("SetTextI18n")
@@ -54,7 +54,7 @@ public class FoundFragment extends Fragment {
                                     String location = (String) data.get("location");
                                     String color = (String) data.get("color");
                                     String email = (String) data.get("email");
-                                    if (lostFound.equals("Lost")) {
+                                    if (lostFound.equals("Found")) {
                                         RelativeLayout new_item = new RelativeLayout(getContext());
 
                                         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -69,10 +69,11 @@ public class FoundFragment extends Fragment {
                                         textView.setText(lostFound + " " + type + "\n" + "Color: " + color + "\n" + "In " + location + "\n" + email);
                                         textView.setTextSize(20);
                                         new_item.addView(textView);
-                                        items.addView(new_item);
+                                        all_items.addView(new_item);
                                     }
                                 }
                             }
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });

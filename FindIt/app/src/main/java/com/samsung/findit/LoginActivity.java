@@ -80,18 +80,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = email_et.getText().toString();
                 String password = password_et.getText().toString();
+                try{
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(LoginActivity.this, task -> {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Intent intent = new Intent(LoginActivity.this, LostFoundActivity.class);
+                                    LoginActivity.this.startActivity(intent);
 
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, task -> {
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Intent intent = new Intent(LoginActivity.this, LostFoundActivity.class);
-                                LoginActivity.this.startActivity(intent);
-
-                            } else {
-                                errors.setText(task.getException().getMessage());
-                            }
-                        });
+                                } else {
+                                    errors.setText(task.getException().getMessage());
+                                }
+                            });
+                }catch(Exception e){
+                    errors.setText(e.getMessage());
+                }
             }
         });
         register_hint.setOnClickListener(new View.OnClickListener() {

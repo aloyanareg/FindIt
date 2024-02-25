@@ -63,6 +63,10 @@
             });
             FirebaseAuth mAuth;
             mAuth = FirebaseAuth.getInstance();
+
+//            if (mAuth.getCurrentUser() != null) {
+//                startActivity(new Intent(RegisterActivity.this, LostFoundActivity.class));
+//            }
             login_hint.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -84,7 +88,6 @@
                         errors.setText("Password length must be not less than 8");
                     }
                     else {
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         mAuth.createUserWithEmailAndPassword(email, password)
                                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -95,6 +98,7 @@
                                                 user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> verificationTask) {
+
                                                         if (verificationTask.isSuccessful()) {
                                                             Log.d("email", "Email verification sent.");
                                                         } else {
@@ -103,11 +107,13 @@
                                                     }
                                                 });
                                                 Intent intent = new Intent(RegisterActivity.this, LostFoundActivity.class);
-                                                RegisterActivity.this.startActivity(intent);
+//                                                RegisterActivity.this.startActivity(intent);
+                                                startActivity(intent);
+                                                finish();
 
                                             }
                                         } else {
-                                            Log.e("registration", "Registration failed.", task.getException());
+                                           errors.setText(task.getException().getMessage());
                                         }
                                     }
                                 });
