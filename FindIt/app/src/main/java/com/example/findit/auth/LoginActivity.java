@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
         gsc = GoogleSignIn.getClient(this, gso);
         auth = FirebaseAuth.getInstance();
         register_hint = findViewById(R.id.register_hint);

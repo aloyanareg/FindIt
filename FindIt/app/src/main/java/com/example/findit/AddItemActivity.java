@@ -90,6 +90,7 @@ public class AddItemActivity extends AppCompatActivity  {
                         intent = new Intent(AddItemActivity.this, MainActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
+
                         break;
                     case 2:
                         intent = new Intent(AddItemActivity.this, AccountActivity.class);

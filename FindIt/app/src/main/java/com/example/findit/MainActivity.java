@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomBar = findViewById(R.id.bottomBar);
+
         loadFragment(new LostFragment());
         auth = FirebaseAuth.getInstance();
 

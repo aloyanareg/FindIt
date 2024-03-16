@@ -33,4 +33,5 @@
     <string name="pick_image">Pick Image</string>
     <string name="x">X</string>
     <string name="remove_image">Remove image</string>
+    <string name="log_out">Log out</string>
 </resources>
