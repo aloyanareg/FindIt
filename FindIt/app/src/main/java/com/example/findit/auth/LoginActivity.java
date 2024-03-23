@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -29,6 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -97,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    checkEmailVerification(auth.getCurrentUser());
                                 }
                             }
                         });
@@ -118,7 +121,55 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+    private void checkEmailVerification(FirebaseUser user) {
+        if (!user.isEmailVerified()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Email not verified");
+            builder.setMessage("Please check your email to verify your account.");
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_verification, null);
+            builder.setView(dialogView);
+            ProgressBar progressBar = dialogView.findViewById(R.id.dialog_progress_bar);
+            TextView dialogText = dialogView.findViewById(R.id.dialog_text);
+            dialogText.setText("Sending verification email...");
+            TextView backButton = dialogView.findViewById(R.id.back_button);
+            AlertDialog dialog = builder.create();
+            backButton.setOnClickListener(view -> {
+                dialog.dismiss();
+            });
+            dialog.setCancelable(false);
+            dialog.show();
+            user.sendEmailVerification()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            dialogText.setText("Verification email sent. Check your email and verify your account.");
+                        } else {
+                            dialogText.setText("Failed to send verification email. Try again later.");
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    });
 
+            builder.setPositiveButton("OK", (dialogInterface, i) -> {
+                dialog.dismiss();
+            });
+            builder.setNegativeButton("Resend Email", (dialogInterface, i) -> {
+                sendVerificationEmail(user);
+                dialog.dismiss();
+            });
+        } else {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+    }
+    private void sendVerificationEmail(FirebaseUser user) {
+        user.sendEmailVerification()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Verification email sent.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

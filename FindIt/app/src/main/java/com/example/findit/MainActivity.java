@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(new LostFragment());
         auth = FirebaseAuth.getInstance();
 
-        if (auth.getCurrentUser() == null) {
+        if (auth.getCurrentUser() == null || !auth.getCurrentUser().isEmailVerified()) {
             startActivity(new Intent(this, RegisterActivity.class));
             finish();
         }
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                        intent = new Intent(MainActivity.this, AddItemActivity.class);
                        startActivity(intent);
                        overridePendingTransition(0, 0);
+                       
                        break;
                    case 2:
                        intent = new Intent(MainActivity.this, AccountActivity.class);

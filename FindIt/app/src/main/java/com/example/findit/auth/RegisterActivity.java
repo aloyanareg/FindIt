@@ -1,7 +1,10 @@
 package com.example.findit.auth;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -114,8 +118,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(RegisterActivity.this, "Registration successful!",
                                             Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                                    finish();
+                                    FirebaseUser user = auth.getCurrentUser();
+                                    sendVerificationEmail(user);
+                                    //startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                    //finish();
                                 }
                             }
                         });
@@ -132,10 +138,47 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    void signIn(){
+    private void showVerificationDialog(FirebaseUser user) {
+
+        Dialog verificationDialog = new Dialog(this);
+        verificationDialog.setContentView(R.layout.dialog_verification);
+        TextView backButton = verificationDialog.findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> {verificationDialog.dismiss();});
+        verificationDialog.setCancelable(false);
+        verificationDialog.show();
+        final Handler handler = new Handler(Looper.getMainLooper());
+        final int delay = 5000;
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                user.reload().addOnCompleteListener(task -> {
+                    if (user.isEmailVerified()) {
+                        verificationDialog.dismiss();
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        handler.postDelayed(this, delay);
+                    }
+                });
+            }
+        }, delay);
+    }
+    private void sendVerificationEmail(FirebaseUser user) {
+        user.sendEmailVerification()
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        showVerificationDialog(user);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    void signIn() {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

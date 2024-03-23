@@ -105,7 +105,7 @@ public class AddItemActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 if (imageLayout.getVisibility() == View.GONE) {
                     ImagePicker.with(AddItemActivity.this)
-                            .crop(400, 400)
+                            .crop(400, 350)
                             .compress(1024)
                             .maxResultSize(1080, 1080)
                             .start();

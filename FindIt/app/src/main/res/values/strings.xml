@@ -34,4 +34,8 @@
     <string name="x">X</string>
     <string name="remove_image">Remove image</string>
     <string name="log_out">Log out</string>
+    <string name="my_posts">My posts</string>
+    <string name="contact">Contact</string>
+    <string name="add_description_time_etc">Add description,time,etc</string>
+    <string name="back">Back</string>
 </resources>

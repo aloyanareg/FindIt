@@ -5,104 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_blue"
+    android:id="@+id/big_cl"
     tools:context=".MainActivity">
-
-    <LinearLayout
-        android:id="@+id/buttons_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:background="@drawable/buttons_rl">
-
         <LinearLayout
-            android:id="@+id/header_buttons"
+            android:id="@+id/buttons_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:background="@drawable/buttons_rl"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/lost_button"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/header_buttons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/lost_found_buttons_clicked"
-                android:text="@string/lost_button_hint"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
-                android:textSize="15sp" />
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/lost_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lost_found_buttons_clicked"
+                    android:text="@string/lost_button_hint"
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/found_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/lost_found_buttons"
+                    android:text="@string/found_button_hint"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/found_button"
-                android:layout_width="0dp"
+                android:id="@+id/new_item_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/lost_found_buttons"
-                android:text="@string/found_button_hint"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginStart="5dp"
-                android:textSize="15sp" />
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/new_item_button"
+                android:text="@string/new_item_button"
+                android:textSize="15sp"
+                app:layout_constraintTop_toBottomOf="@+id/header_buttons" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/new_item_button"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/new_item_button"
-            android:text="@string/new_item_button"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@+id/header_buttons"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
-    </LinearLayout>
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttons_rl"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="80dp"/>
+            android:layout_height="0dp"
+            android:layout_marginBottom="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttons_rl" />
 
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/fragment_container"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:background="@drawable/bottom_navigation_bar"-->
-<!--        app:menu="@menu/bottom_nav_bar"-->
-<!--        app:itemTextColor="@color/bottom_nav_colors"-->
-<!--        app:itemIconTint="@color/bottom_nav_colors"-->
-<!--        app:itemRippleColor="@color/transparent"-->
-<!--        />-->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/buttons_rl"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
-    <me.ibrahimsn.lib.SmoothBottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:iconSize="35dp"
-        app:backgroundColor="@color/blue"
-        app:textSize="14sp"
-        app:menu="@menu/bottom_nav_bar"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:indeterminateTint="@color/blue"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttons_rl" />
+
+        <me.ibrahimsn.lib.SmoothBottomBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:backgroundColor="@color/blue"
+            app:iconSize="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_bar"
+            app:textSize="14sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

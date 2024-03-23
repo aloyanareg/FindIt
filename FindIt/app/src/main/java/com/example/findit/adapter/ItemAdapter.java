@@ -1,10 +1,10 @@
 package com.example.findit.adapter;
 
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,24 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.findit.R;
 import com.example.findit.model.Item;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     private List<Item> itemList;
+    private OnItemClickListener listener;
 
-    public ItemAdapter(List<Item> itemList) {
+    public ItemAdapter(List<Item> itemList, OnItemClickListener listener) {
         this.itemList = itemList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row, parent, false);
+
         return new ItemViewHolder(view);
     }
 
@@ -48,14 +49,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         StorageReference imageRef = storageRef.child("/images/" + item.getPhotoUrl() + ".jpg");
         System.out.println(imageRef);
         // Assuming you have an initialized StorageReference (e.g., imageRef)
+        holder.pb.setVisibility(View.VISIBLE);
         imageRef.getDownloadUrl().addOnSuccessListener(downloadUrl -> {
             String imageUrl = downloadUrl.toString();
             Glide.with(holder.itemImage.getContext()).load(imageUrl).into(holder.itemImage);
+            holder.pb.setVisibility(View.GONE);
         }).addOnFailureListener(exception -> {
         });
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(item);
+                }
+            }
+        });
     }
-
+    public interface OnItemClickListener {
+        void onItemClick(Item item);
+    }
     @Override
     public int getItemCount() {
         return itemList.size();
@@ -72,6 +84,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         TextView colorTextView;
         TextView locationTextView;
         ImageView itemImage;
+        ProgressBar pb;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +92,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             colorTextView = itemView.findViewById(R.id.colorTextView);
             locationTextView = itemView.findViewById(R.id.locationTextView);
             itemImage = itemView.findViewById(R.id.item_image);
+            pb = itemView.findViewById(R.id.image_progressBar);
         }
     }
 }
