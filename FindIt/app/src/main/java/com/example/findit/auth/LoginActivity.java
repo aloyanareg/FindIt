@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             builder.setTitle("Email not verified");
             builder.setMessage("Please check your email to verify your account.");
             View dialogView = getLayoutInflater().inflate(R.layout.dialog_verification, null);
+            dialogView.setBackgroundDrawable(getDrawable(R.drawable.verifiy_dialog));
             builder.setView(dialogView);
             ProgressBar progressBar = dialogView.findViewById(R.id.dialog_progress_bar);
             TextView dialogText = dialogView.findViewById(R.id.dialog_text);

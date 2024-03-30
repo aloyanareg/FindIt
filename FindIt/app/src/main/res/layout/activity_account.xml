@@ -81,6 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:iconSize="35dp"
         app:backgroundColor="@color/blue"
-        app:textSize="14sp"
+        app:duration="0"
+        app:textSize="12sp"
         app:menu="@menu/bottom_nav_bar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

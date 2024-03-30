@@ -43,7 +43,6 @@ public class FoundFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_found, container, false);
         getActivity().findViewById(R.id.buttons_rl).setVisibility(View.VISIBLE);
         db = FirebaseFirestore.getInstance();
-
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         itemAdapter = new ItemAdapter(new ArrayList<>(), item -> {
@@ -55,6 +54,7 @@ public class FoundFragment extends Fragment {
             bundle.putBoolean("lostFound", item.isLost());
             bundle.putString("location", item.getLocation());
             bundle.putString("title", item.getTitle());
+            bundle.putString("description", item.getDescription());
             bundle.putString("pastFragment", "FoundFragment");
             currentItemFragment.setArguments(bundle);
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

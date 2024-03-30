@@ -6,7 +6,22 @@
     android:padding="16dp"
     android:background="@drawable/blue_background"
     android:layout_marginBottom="10dp">
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/person_icon"/>
+        <TextView
+            android:id="@+id/display_name"
+            android:textSize="20sp"
+            android:textColor="@color/light_blue"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"

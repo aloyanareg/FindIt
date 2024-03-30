@@ -16,13 +16,16 @@
         android:theme="@style/Theme.FindIt"
         tools:targetApi="31">
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".model.AccountActivity"
             android:exported="false" />
         <activity
             android:name=".AddItemActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".auth.LoginActivity"
             android:exported="false"

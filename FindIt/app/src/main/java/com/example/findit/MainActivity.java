@@ -15,6 +15,7 @@ import com.example.findit.fragments.LostFragment;
 import com.example.findit.model.AccountActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
@@ -56,25 +57,31 @@ public class MainActivity extends AppCompatActivity {
                     lostButton.setBackgroundResource(R.drawable.lost_found_buttons_clicked);
                 }
         );
-       bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
-           @Override
-           public boolean onItemSelect(int i) {
-               Intent intent;
-               switch (i){
-                   case 1:
-                       intent = new Intent(MainActivity.this, AddItemActivity.class);
-                       startActivity(intent);
-                       overridePendingTransition(0, 0);
-                       
-                       break;
-                   case 2:
-                       intent = new Intent(MainActivity.this, AccountActivity.class);
-                       startActivity(intent);
-                       overridePendingTransition(0, 0);
-               }
-               return true;
-           }
-       });
+        bottomBar.setItemActiveIndex(0);
+        bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public boolean onItemSelect(int i) {
+                Intent intent;
+                switch (i) {
+                    case 1:
+                        intent = new Intent(MainActivity.this, AddItemActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        break;
+                    case 2:
+                        intent = new Intent(MainActivity.this, ChatActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        break;
+                    case 3:
+                        intent = new Intent(MainActivity.this, AccountActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        break;
+                }
+                return true;
+            }
+        });
 
     }
 

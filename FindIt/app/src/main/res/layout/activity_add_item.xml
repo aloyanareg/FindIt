@@ -26,7 +26,8 @@
                 android:layout_gravity="center"
                 android:text="@string/add_item_main_string"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="35sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +40,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:orientation="horizontal"
+                android:layout_marginTop="60dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -49,16 +51,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/item_lost"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/black"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@drawable/radio_button_selector"
+                    android:textAlignment="center"
                     android:textSize="15sp" />
 
                 <RadioButton
                     android:id="@+id/item_found"
                     android:layout_width="0dp"
+                    android:layout_marginStart="10dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/item_found"
                     android:textColor="@color/black"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@drawable/radio_button_selector"
+                    android:textAlignment="center"
                     android:textSize="15sp" />
             </RadioGroup>
 
@@ -67,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/add_item_edittext"
                 android:hint="@string/title_hint"
@@ -124,7 +134,8 @@
                 android:textColorHint="@color/dark_gray"
                 app:layout_constraintBottom_toTopOf="@+id/pick_image_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_location" />
+                app:layout_constraintTop_toBottomOf="@+id/item_location"
+                android:textColor="@color/black"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/pick_image_button"
@@ -167,6 +178,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/add_new_item_button"
                 android:text="@string/add_item_button"
                 app:layout_constraintTop_toBottomOf="@+id/imageLayout" />
@@ -180,6 +192,7 @@
         app:backgroundColor="@color/blue"
         app:iconSize="35dp"
         app:menu="@menu/bottom_nav_bar"
-        app:textSize="14sp"
+        app:duration="0"
+        app:textSize="12sp"
         android:layout_gravity="bottom"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

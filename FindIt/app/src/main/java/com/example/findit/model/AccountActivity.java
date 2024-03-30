@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.findit.AddItemActivity;
+import com.example.findit.ChatActivity;
 import com.example.findit.MainActivity;
 import com.example.findit.R;
 import com.example.findit.auth.RegisterActivity;
@@ -44,7 +45,7 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
         userImage = findViewById(R.id.user_image);
         bottomBar = findViewById(R.id.bottomBar);
-        bottomBar.setItemActiveIndex(2);
+        bottomBar.setItemActiveIndex(3);
         userName = findViewById(R.id.user_name);
         userName.setTextColor(getColor(R.color.light_blue));
         my_account = findViewById(R.id.my_account);
@@ -81,15 +82,21 @@ public class AccountActivity extends AppCompatActivity {
             public boolean onItemSelect(int i) {
                 Intent intent;
                 switch (i){
+                    case 0:
+                        intent = new Intent(AccountActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        break;
                     case 1:
                         intent = new Intent(AccountActivity.this, AddItemActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         break;
-                    case 0:
-                        intent = new Intent(AccountActivity.this, MainActivity.class);
+                    case 2:
+                        intent = new Intent(AccountActivity.this, ChatActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
+                        break;
                 }
                 return true;
             }

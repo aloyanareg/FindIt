@@ -94,9 +94,10 @@
             android:layout_height="70dp"
             app:backgroundColor="@color/blue"
             app:iconSize="35dp"
+            app:duration="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav_bar"
-            app:textSize="14sp" />
+            app:textSize="12sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

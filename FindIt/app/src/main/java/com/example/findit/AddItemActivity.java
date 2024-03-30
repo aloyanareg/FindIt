@@ -45,11 +45,13 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 
 public class AddItemActivity extends AppCompatActivity  {
     SmoothBottomBar bottomBar;
-    private EditText itemTypeEditText, itemColorEditText, itemLocationEditText;
+
+    private EditText itemTypeEditText, itemColorEditText, itemLocationEditText, description;
     private RadioGroup itemLostOrFoundRadioGroup;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private ImageView selectedImageView;
+
     Button pick_image_button;
     FrameLayout imageLayout;
     // Create a storage reference from our app
@@ -63,6 +65,8 @@ public class AddItemActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_add_item);
         imageLayout = findViewById(R.id.imageLayout);
         bottomBar = findViewById(R.id.bottomBar);
+        bottomBar.setItemActiveIndex(1);
+        description = findViewById(R.id.item_description);
         selectedImageView = findViewById(R.id.selected_image_view);
         db = FirebaseFirestore.getInstance();
         pick_image_button = findViewById(R.id.pick_image_button);
@@ -80,7 +84,6 @@ public class AddItemActivity extends AppCompatActivity  {
                 addItemToFirestore();
             }
         });
-        bottomBar.setItemActiveIndex(1);
         bottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public boolean onItemSelect(int i) {
@@ -93,9 +96,15 @@ public class AddItemActivity extends AppCompatActivity  {
 
                         break;
                     case 2:
+                        intent = new Intent(AddItemActivity.this, ChatActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        break;
+                    case 3:
                         intent = new Intent(AddItemActivity.this, AccountActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
+                        break;
                 }
                 return true;
             }
@@ -138,6 +147,7 @@ public class AddItemActivity extends AppCompatActivity  {
         String type = itemTypeEditText.getText().toString().trim();
         String color = itemColorEditText.getText().toString().trim();
         String location = itemLocationEditText.getText().toString().trim();
+        String description_text = description.getText().toString().trim();
         boolean isLost = itemLostOrFoundRadioGroup.getCheckedRadioButtonId() == R.id.item_lost;
 
         if (itemLostOrFoundRadioGroup.getCheckedRadioButtonId() == -1 || type.isEmpty() || color.isEmpty() || location.isEmpty()|| selectedImageView.getDrawable() == null) {
@@ -150,6 +160,7 @@ public class AddItemActivity extends AppCompatActivity  {
         item.setLocation(location);
         item.setOwnerID(auth.getCurrentUser().getUid());
         item.setLost(isLost);
+        item.setDescription(description_text);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         ImageUploader uploader = new ImageUploader();
         uploader.uploadImage(selectedImageView);

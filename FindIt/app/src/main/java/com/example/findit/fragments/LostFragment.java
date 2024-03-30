@@ -53,7 +53,8 @@ public class LostFragment extends Fragment {
             bundle.putBoolean("lostFound", item.isLost());
             bundle.putString("location", item.getLocation());
             bundle.putString("title", item.getTitle());
-            bundle.putString("pastFragment", "FoundFragment");
+            bundle.putString("pastFragment", "LostFragment");
+            bundle.putString("description", item.getDescription());
             currentItemFragment.setArguments(bundle);
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             getActivity().findViewById(R.id.buttons_rl).setVisibility(GONE);
