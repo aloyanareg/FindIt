@@ -1,21 +1,14 @@
 package com.example.findit;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,11 +27,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
-import java.util.Date;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
@@ -51,6 +39,7 @@ public class AddItemActivity extends AppCompatActivity  {
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private ImageView selectedImageView;
+    private EditText owner_phone;
 
     Button pick_image_button;
     FrameLayout imageLayout;
@@ -58,11 +47,21 @@ public class AddItemActivity extends AppCompatActivity  {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+    protected void onResume(){
+        super.onResume();
+        bottomBar.setItemActiveIndex(1);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(0, 0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+        owner_phone = findViewById(R.id.owner_phone);
         imageLayout = findViewById(R.id.imageLayout);
         bottomBar = findViewById(R.id.bottomBar);
         bottomBar.setItemActiveIndex(1);
@@ -96,11 +95,6 @@ public class AddItemActivity extends AppCompatActivity  {
 
                         break;
                     case 2:
-                        intent = new Intent(AddItemActivity.this, ChatActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                        break;
-                    case 3:
                         intent = new Intent(AddItemActivity.this, AccountActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
@@ -148,9 +142,10 @@ public class AddItemActivity extends AppCompatActivity  {
         String color = itemColorEditText.getText().toString().trim();
         String location = itemLocationEditText.getText().toString().trim();
         String description_text = description.getText().toString().trim();
+        String phone = owner_phone.getText().toString().trim();
         boolean isLost = itemLostOrFoundRadioGroup.getCheckedRadioButtonId() == R.id.item_lost;
 
-        if (itemLostOrFoundRadioGroup.getCheckedRadioButtonId() == -1 || type.isEmpty() || color.isEmpty() || location.isEmpty()|| selectedImageView.getDrawable() == null) {
+        if (itemLostOrFoundRadioGroup.getCheckedRadioButtonId() == -1 || type.isEmpty() || color.isEmpty() || location.isEmpty()|| phone.isEmpty() || selectedImageView.getDrawable() == null) {
             Toast.makeText(AddItemActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -161,6 +156,7 @@ public class AddItemActivity extends AppCompatActivity  {
         item.setOwnerID(auth.getCurrentUser().getUid());
         item.setLost(isLost);
         item.setDescription(description_text);
+        item.setOwnerPhone(phone);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         ImageUploader uploader = new ImageUploader();
         uploader.uploadImage(selectedImageView);

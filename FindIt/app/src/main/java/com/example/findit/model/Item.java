@@ -1,13 +1,13 @@
 package com.example.findit.model;
 
 public class Item {
-    private String title, color, location, ownerID, photoUrl, description;
+    private String title, color, location, ownerID, photoUrl, description, ownerPhone;
     private boolean isLost;
 
     public Item() {
     }
 
-    public Item(String title, String color, String location, String ownerID, boolean isLost,String  photoUrl, String description) {
+    public Item(String title, String color, String location, String ownerID, boolean isLost,String  photoUrl, String description, String ownerPhone) {
         this.title = title;
         this.color = color;
         this.location = location;
@@ -15,6 +15,7 @@ public class Item {
         this.isLost = isLost;
         this.photoUrl = photoUrl;
         this.description = description;
+        this.ownerPhone = ownerPhone;
     }
 
     public String getTitle() {
@@ -60,5 +61,13 @@ public class Item {
     }
     public void setPhotoUrl(String photoUrl){
         this.photoUrl = photoUrl;
+    }
+
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
     }
 }

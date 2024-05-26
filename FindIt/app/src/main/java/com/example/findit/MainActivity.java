@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.findit.auth.RegisterActivity;
@@ -14,7 +13,6 @@ import com.example.findit.fragments.FoundFragment;
 import com.example.findit.fragments.LostFragment;
 import com.example.findit.model.AccountActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
@@ -22,9 +20,15 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     SmoothBottomBar bottomBar;
+    @Override
+    protected void onResume(){
+        super.onResume();
+        bottomBar.setItemActiveIndex(0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(0, 0);
         getWindow().setStatusBarColor(getResources().getColor(R.color.blue));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -69,11 +73,6 @@ public class MainActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         break;
                     case 2:
-                        intent = new Intent(MainActivity.this, ChatActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                        break;
-                    case 3:
                         intent = new Intent(MainActivity.this, AccountActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
@@ -83,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 
     private void loadFragment(Fragment fragment) {

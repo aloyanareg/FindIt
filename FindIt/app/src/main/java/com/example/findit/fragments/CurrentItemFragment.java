@@ -1,11 +1,12 @@
 package com.example.findit.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +20,15 @@ import com.bumptech.glide.Glide;
 import com.example.findit.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 public class CurrentItemFragment extends Fragment {
     ProgressBar progressBar;
     ImageButton closeButton;
     Button contactButton;
-    TextView title, color, location, description;
+    TextView title, color, location, description, phone;
     FirebaseFirestore db;
     FirebaseUser user;
     @Override
@@ -42,6 +38,7 @@ public class CurrentItemFragment extends Fragment {
         progressBar = getView().findViewById(R.id.progressBarCurrent);
         user = FirebaseAuth.getInstance().getCurrentUser();
         progressBar.setVisibility(View.VISIBLE);
+        phone = view.findViewById(R.id.phone);
         db = FirebaseFirestore.getInstance();
         closeButton = getView().findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +52,12 @@ public class CurrentItemFragment extends Fragment {
         color = getView().findViewById(R.id.color);
         description = getView().findViewById(R.id.description);
         Bundle bundle = getArguments();
+        if(bundle.getString("ownerId") == user.getUid()){
+            contactButton.setVisibility(View.GONE);
+        }
+        else{
+            contactButton.setVisibility(View.VISIBLE);
+        }
         ImageView item_image = getView().findViewById(R.id.item_image);
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference imageRef = storageRef.child("/images/" + bundle.getString("photoUrl") + ".jpg");
@@ -72,6 +75,7 @@ public class CurrentItemFragment extends Fragment {
             color.setText(bundle.getString("color"));
             location.setText(bundle.getString("location"));
             description.setText(bundle.getString("description"));
+            phone.setText(bundle.getString("ownerPhone"));
             progressBar.setVisibility(View.GONE);
             closeButton.setVisibility(View.VISIBLE);
         }).addOnFailureListener(exception -> {
@@ -79,34 +83,14 @@ public class CurrentItemFragment extends Fragment {
         contactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!user.getUid().equals(bundle.getString("ownerId"))){
-                    db.collection("users")
-                            .whereEqualTo("userID", user.getUid())
-                            .get()
-                            .addOnSuccessListener(queryDocumentSnapshots -> {
-                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                    document.getReference().update("chatWith", FieldValue.arrayUnion(bundle.getString("ownerId")))
-                                            .addOnSuccessListener(aVoid -> Log.d("UpdateSuccess", "DocumentSnapshot successfully updated!"))
-                                            .addOnFailureListener(e -> Log.w("UpdateError", "Error updating document", e));
-                                }
-                            })
-                            .addOnFailureListener(e -> Log.w("QueryError", "Error getting documents: ", e));
-                    db.collection("users")
-                            .whereEqualTo("userID", bundle.getString("ownerId"))
-                            .get()
-                            .addOnSuccessListener(queryDocumentSnapshots -> {
-                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                    String newItem = user.getUid();
-                                    document.getReference().update("chatWith", FieldValue.arrayUnion(newItem))
-                                            .addOnSuccessListener(aVoid -> Log.d("UpdateSuccess", "DocumentSnapshot successfully updated!"))
-                                            .addOnFailureListener(e -> Log.w("UpdateError", "Error updating document", e));
-                                }
-                            })
-                            .addOnFailureListener(e -> Log.w("QueryError", "Error getting documents: ", e));
-                }
+                String phoneNumber = phone.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+                startActivity(intent);
             }
         });
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -2,13 +2,13 @@ package com.example.findit.fragments;
 
 import static android.view.View.GONE;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -56,6 +56,7 @@ public class FoundFragment extends Fragment {
             bundle.putString("title", item.getTitle());
             bundle.putString("description", item.getDescription());
             bundle.putString("pastFragment", "FoundFragment");
+            bundle.putString("ownerPhone", item.getOwnerPhone());
             currentItemFragment.setArguments(bundle);
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             getActivity().findViewById(R.id.buttons_rl).setVisibility(GONE);
@@ -64,6 +65,15 @@ public class FoundFragment extends Fragment {
             transaction.commit();
         });
         recyclerView.setAdapter(itemAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (!recyclerView.canScrollVertically(1) && dy > 0) {
+                    loadDataFromFirestore();
+                }
+            }
+        });
         progressBar = getActivity().findViewById(R.id.progressBar);
         loadDataFromFirestore();
         return view;

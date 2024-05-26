@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.findit.MainActivity;
 import com.example.findit.R;
@@ -31,20 +31,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import org.w3c.dom.Text;
-
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     TextView errorTextView;
-    Button continue_with_google;
+    RelativeLayout continue_with_google;
     ProgressBar google_pb;
     GoogleSignInClient gsc;
     static final int RC_SIGN_IN = 9001;
     private ProgressBar progressBar;
+    Button guest_mode;
     private FirebaseAuth auth;
     TextView register_hint;
     Button submitButton;
+    private final String default_email = "sictst1@gmail.com";
+    private final String default_password = "Samsung2023";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-
+        guest_mode = findViewById(R.id.guest_mode);
         gsc = GoogleSignIn.getClient(this, gso);
         auth = FirebaseAuth.getInstance();
         register_hint = findViewById(R.id.register_hint);
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.submit_pb);
         errorTextView = findViewById(R.id.error_message_login);
 
-        continue_with_google = findViewById(R.id.submitGoogle);
+        continue_with_google = findViewById(R.id.google_rl);
         google_pb = findViewById(R.id.google_pb);
         register_hint.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
 
@@ -106,11 +107,36 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+        guest_mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    auth.signInWithEmailAndPassword(default_email, default_password)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressBar.setVisibility(View.GONE);
+                                    submitButton.setText(R.string.login_submit_hint);
+                                    if (!task.isSuccessful()) {
+                                        Log.w("LoginActivity", "signInWithEmail:failure", task.getException());
+                                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                                        checkEmailVerification(auth.getCurrentUser());
+                                    }
+                                }
+                            });
+                }catch (Exception e){
+
+                }
+            }
+        });
         continue_with_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                continue_with_google.setText("");
-                continue_with_google.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); // Set all drawables to null
+                findViewById(R.id.google_text).setVisibility(View.INVISIBLE);
+                findViewById(R.id.google_button_logo).setVisibility(View.INVISIBLE);
                 google_pb.setVisibility(View.VISIBLE);
                 signIn();
 
@@ -200,9 +226,9 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        continue_with_google.setText("Google");
+                        findViewById(R.id.google_text).setVisibility(View.VISIBLE);
                         google_pb.setVisibility(View.INVISIBLE);
-                        continue_with_google.setCompoundDrawablesWithIntrinsicBounds(R.drawable.google_logo, 0, 0, 0);
+                        findViewById(R.id.google_button_logo).setVisibility(View.VISIBLE);
                         Log.w("GOOGLE: ", "signInWithCredential:failure", task.getException());
                     }
                 });

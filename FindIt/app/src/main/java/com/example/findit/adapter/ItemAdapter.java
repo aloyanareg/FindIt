@@ -8,18 +8,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.findit.R;
 import com.example.findit.model.Item;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -97,7 +92,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         this.itemList.addAll(itemList);
         notifyDataSetChanged();
     }
-
+    public void addItems(List<Item> newItems) {
+        this.itemList.addAll(newItems);
+        notifyDataSetChanged();
+    }
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView colorTextView;

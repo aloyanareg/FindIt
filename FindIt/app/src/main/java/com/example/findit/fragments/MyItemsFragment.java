@@ -30,11 +30,62 @@ public class MyItemsFragment extends Fragment {
     FirebaseUser user = auth.getCurrentUser();
     private FirebaseFirestore db;
     private ItemAdapter itemAdapter;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (getActivity() != null) {
+            getActivity().findViewById(R.id.user_name).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.user_image).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.my_posts_button).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.log_out_button).setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view,savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
         db = FirebaseFirestore.getInstance();
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         itemAdapter = new ItemAdapter(new ArrayList<>(), item -> {
+            Fragment currentItemFragment = new CurrentItemFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("photoUrl", item.getPhotoUrl());
+            bundle.putString("ownerId", item.getOwnerID());
+            bundle.putString("color", item.getColor());
+            bundle.putBoolean("lostFound", item.isLost());
+            bundle.putString("location", item.getLocation());
+            bundle.putString("title", item.getTitle());
+            bundle.putString("description", item.getDescription());
+            bundle.putString("ownerPhone", item.getOwnerPhone());
+            currentItemFragment.setArguments(bundle);
+
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, currentItemFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
+        view.findViewById(R.id.exit_my_posts).setOnClickListener(v -> {
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStack();
+            } else {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.remove(MyItemsFragment.this);
+                transaction.commit();
+            }
+        });
+
+        recyclerView.setAdapter(itemAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (!recyclerView.canScrollVertically(1) && dy > 0) {
+                    loadDataFromFirestore();
+                }
+            }
         });
         loadDataFromFirestore();
     }
@@ -45,6 +96,7 @@ public class MyItemsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_items, container, false);
     }
+
     private void loadDataFromFirestore() {
         db.collection("items")
                 .whereEqualTo("ownerID", user.getUid())

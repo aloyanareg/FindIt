@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView errorTextView;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    Button continue_with_google;
+    RelativeLayout continue_with_google;
     ProgressBar google_pb;
     GoogleSignInClient gsc;
     TextView loginHint;
@@ -69,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         user_name = findViewById(R.id.user_name);
         inputRepeatPassword = findViewById(R.id.repeatPassword);
         progressBar = findViewById(R.id.submit_pb);
-        continue_with_google = findViewById(R.id.submitGoogle);
+        continue_with_google = findViewById(R.id.google_rl);
         errorTextView = findViewById(R.id.error_message_register);
 
 
@@ -135,8 +136,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     User _user = new User(user.getUid(), chatWithList, userName);
                                     db.collection("users").document(user.getUid()).set(_user);
                                     sendVerificationEmail(user);
-                                    //startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                                    //finish();
                                 }
                             }
                         });
@@ -145,8 +144,8 @@ public class RegisterActivity extends AppCompatActivity {
         continue_with_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                continue_with_google.setText("");
-                continue_with_google.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); // Set all drawables to null
+                findViewById(R.id.google_text).setVisibility(View.INVISIBLE);
+                findViewById(R.id.google_button_logo).setVisibility(View.INVISIBLE);
                 google_pb.setVisibility(View.VISIBLE);
                 signIn();
 
@@ -225,9 +224,8 @@ public class RegisterActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        continue_with_google.setText("Google");
-                        google_pb.setVisibility(View.INVISIBLE);
-                        continue_with_google.setCompoundDrawablesWithIntrinsicBounds(R.drawable.google_logo, 0, 0, 0);
+                        findViewById(R.id.google_text).setVisibility(View.VISIBLE);
+                        findViewById(R.id.google_button_logo).setVisibility(View.VISIBLE);
                         Log.w("GOOGLE: ", "signInWithCredential:failure", task.getException());
                     }
                 });

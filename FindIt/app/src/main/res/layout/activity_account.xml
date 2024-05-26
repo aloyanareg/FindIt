@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,10 +21,6 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:background="@drawable/baseline_account_circle_24"
-            app:layout_constraintBottom_toTopOf="@+id/log_out_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_gravity="center"/>
 
         <TextView
@@ -34,10 +29,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="35sp"
-            app:layout_constraintBottom_toTopOf="@+id/log_out_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_image"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -45,32 +37,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="55dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/account_button"
             android:text="@string/log_out"
-            android:textColor="@color/light_blue"
-            app:layout_constraintBottom_toTopOf="@+id/bottomBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/light_blue" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/my_posts_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/account_button"
             android:text="@string/my_posts"
-            android:textColor="@color/light_blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/log_out_button" />
+            android:textColor="@color/light_blue" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_account"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar" />
 
     <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottomBar"

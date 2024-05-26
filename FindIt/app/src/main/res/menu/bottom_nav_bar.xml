@@ -10,11 +10,6 @@
         android:title=""
         android:icon="@drawable/ic_add_circle"/>
     <item
-        android:id="@+id/my_conversations"
-        android:title=""
-        android:icon="@drawable/ic_chat_foreground"
-        />
-    <item
         android:id="@+id/person"
         android:title=""
         android:icon="@drawable/ic_person_foreground"

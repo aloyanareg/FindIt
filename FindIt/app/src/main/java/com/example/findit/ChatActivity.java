@@ -1,9 +1,5 @@
 package com.example.findit;
 
-import static android.view.View.GONE;
-
-import static java.security.AccessController.getContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,21 +12,15 @@ import android.view.View;
 import android.widget.ScrollView;
 
 import com.example.findit.adapter.ChatAdapter;
-import com.example.findit.adapter.ItemAdapter;
 import com.example.findit.fragments.CurrentChatFragment;
-import com.example.findit.fragments.CurrentItemFragment;
 import com.example.findit.model.AccountActivity;
-import com.example.findit.model.Item;
 import com.example.findit.model.User;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
@@ -42,8 +32,18 @@ public class ChatActivity extends AppCompatActivity {
     ScrollView scrollView;
     FirebaseFirestore db;
     FirebaseUser user;
+    protected void onResume(){
+        super.onResume();
+        bottomBar.setItemActiveIndex(2);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(0, 0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         db = FirebaseFirestore.getInstance();

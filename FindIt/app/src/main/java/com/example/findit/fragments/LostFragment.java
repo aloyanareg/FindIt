@@ -19,6 +19,7 @@ import com.example.findit.model.Item;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,6 +31,8 @@ public class LostFragment extends Fragment {
     private FirebaseFirestore db;
     private ItemAdapter itemAdapter;
     ProgressBar progressBar;
+    private DocumentSnapshot lastVisible;
+    private boolean isLoadingItems = false;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     public LostFragment() {
@@ -55,6 +58,7 @@ public class LostFragment extends Fragment {
             bundle.putString("title", item.getTitle());
             bundle.putString("pastFragment", "LostFragment");
             bundle.putString("description", item.getDescription());
+            bundle.putString("ownerPhone", item.getOwnerPhone());
             currentItemFragment.setArguments(bundle);
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             getActivity().findViewById(R.id.buttons_rl).setVisibility(GONE);

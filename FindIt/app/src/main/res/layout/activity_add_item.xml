@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_blue"
     tools:context=".AddItemActivity">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/light_blue"
-            tools:context=".AddItemActivity">
+            tools:context=".AddItemActivity"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -169,19 +171,34 @@
                     android:visibility="gone" />
 
             </FrameLayout>
-
+            <EditText
+                android:id="@+id/owner_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/add_item_edittext"
+                android:hint="@string/enter_your_mobile_number"
+                android:padding="10dp"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageLayout"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/add_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="60dp"
                 android:background="@drawable/add_new_item_button"
                 android:text="@string/add_item_button"
-                app:layout_constraintTop_toBottomOf="@+id/imageLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/owner_phone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

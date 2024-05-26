@@ -13,25 +13,27 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/logo"
-        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_to_findit"
-        android:textSize="40sp"
         android:textColor="@color/black"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+        android:layout_marginBottom="25dp"/>
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.60"
         android:background="@drawable/auth_relative"
         android:paddingStart="20dp"
         android:paddingTop="30dp"
@@ -110,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
+                android:textSize="16sp"
                 android:background="@drawable/auth_submit"
                 android:text="@string/register_submit_hint"
                 android:textColor="@color/black" />
@@ -124,6 +127,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/continue_with"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/submit_rl"
@@ -149,31 +153,41 @@
             android:id="@+id/google_rl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/submit_rl"
+            android:layout_below="@id/continue_with"
             android:gravity="center_vertical"
-            >
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/submitGoogle"
+            android:background="@drawable/auth_submit_google"
+            android:padding="4dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/auth_submit_google"
-                android:drawableStart="@drawable/google_logo"
-                android:gravity="center"
-                android:paddingStart="145dp"
-                android:paddingEnd="140dp"
-                android:text="@string/register_submit_by_google_hint"
-                android:textColor="@color/black">
-            </androidx.appcompat.widget.AppCompatButton>
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+                <RelativeLayout
+                    android:id="@+id/google_button_logo"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/google_logo"/>
+                <TextView
+                    android:id="@+id/google_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:text="@string/register_submit_by_google_hint"/>
+            </LinearLayout>
+
             <ProgressBar
                 android:id="@+id/google_pb"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:elevation="10dp"
-                android:layout_centerInParent="true"
                 android:visibility="invisible"
-                android:layout_marginTop="50dp"/>
+                android:elevation="10dp"
+                style="?android:attr/progressBarStyle"
+                android:indeterminateTint="@color/blue"
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

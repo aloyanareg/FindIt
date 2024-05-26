@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import com.example.findit.R;
 
-import java.util.ArrayList;
-
 public class CurrentChatFragment extends Fragment {
 
     @Override
